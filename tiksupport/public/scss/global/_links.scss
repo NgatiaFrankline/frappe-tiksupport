@@ -1,0 +1,12 @@
+/*!
+ * Copyright (c) 2026, UNIVERSITY OF ELDORET and Ngatia Frankline
+ * For license information, please see license.txt
+ */
+
+a:not(.btn):not([class*="btn-"]) {
+	color: var(--kustomize-link-color, var(--link-color, #000066));
+}
+
+a:not(.btn):not([class*="btn-"]):hover {
+	color: var(--kustomize-action-hover-color, var(--action-hover-color, #cc9933)) !important;
+}

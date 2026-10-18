@@ -1,0 +1,40 @@
+{
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "contact_type",
+  "label",
+  "value"
+ ],
+ "fields": [
+  {
+   "fieldname": "contact_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Contact Type",
+   "options": "Email\nPhone\nAddress",
+   "reqd": 1
+  },
+  {
+   "fieldname": "label",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Label",
+   "reqd": 1
+  },
+  {
+   "fieldname": "value",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Contact Details",
+   "reqd": 1
+  }
+ ],
+ "istable": 1,
+ "module": "TikSupport",
+ "name": "TikSupport Contact",
+ "permissions": [],
+ "sort_field": "idx",
+ "sort_order": "ASC"
+}

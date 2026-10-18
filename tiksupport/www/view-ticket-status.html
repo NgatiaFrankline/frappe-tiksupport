@@ -1,0 +1,62 @@
+{% extends "tiksupport/templates/ticket_base.html" %}
+
+{% block title %}{{ _("View Ticket Status") }}{% endblock %}
+
+{% block page_id %}view-ticket-status-page{% endblock %}
+
+{% block page_data_attrs %}data-status-label="{{ _('Status') }}"{% endblock %}
+
+{% block header_intro %}{{ _("Check the status of a ticket you have already submitted.") }}{% endblock %}
+
+{% block header_link %}
+<a href="/create-ticket">
+  <span aria-hidden="true">🤔</span>
+  {{ _("Don't have a ticket? Create one here") }}
+  <span aria-hidden="true">→</span>
+</a>
+{% endblock %}
+
+{% block section_title %}{{ _("Check ticket status") }}{% endblock %}
+
+{% block section_intro %}{{ _("For privacy, enter both the ticket number and the email address used when submitting it.") }}{% endblock %}
+
+{% block ticket_form %}
+<form id="view-ticket-status-form">
+  <p class="text-muted small">
+    <span class="required-mark" aria-hidden="true">*</span> {{ _("indicates a required field") }}
+  </p>
+  <div class="my-5">
+    <label class="form-label ticket-form-label" for="view-ticket-number">
+      <svg class="ticket-form-label__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+        <path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-7"/>
+        <path d="M2 7h20v5a2 2 0 0 1-2 2 2.5 2.5 0 0 1-2.5-2 2.5 2.5 0 0 1-5 0 2.5 2.5 0 0 1-5 0A2.5 2.5 0 0 1 5 14a2 2 0 0 1-3-2V7z"/>
+        <path d="M2 7l2-5h16l2 5"/>
+      </svg>
+      {{ _("Ticket number") }}<span class="required-mark" aria-hidden="true"> *</span>
+    </label>
+    <input class="form-control" id="view-ticket-number" name="ticket_number" placeholder="Enter ticket number" required aria-required="true">
+  </div>
+  <div class="my-5">
+    <label class="form-label ticket-form-label" for="view-ticket-email">
+      <svg class="ticket-form-label__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+        <rect x="3" y="5" width="18" height="14" rx="2"/>
+        <path d="m3 7 9 6 9-6"/>
+      </svg>
+      {{ _("Email address") }}<span class="required-mark" aria-hidden="true"> *</span>
+    </label>
+    <input class="form-control" id="view-ticket-email" name="email" type="email" maxlength="254" autocomplete="email" placeholder="Enter email address" required aria-required="true">
+		<small class="text-muted d-block">{{ _("(used when submitting the ticket)") }}</small>
+	</div>
+  {% if recaptcha_enabled %}
+  <div class="ticket-recaptcha">
+    <div class="g-recaptcha" data-sitekey="{{ recaptcha_site_key }}"></div>
+  </div>
+  {% endif %}
+  <div id="view-ticket-status-result" class="mb-3" role="status" aria-live="polite"></div>
+  <button class="btn btn-primary" type="submit">{{ _("Check status") }}</button>
+</form>
+{% endblock %}
+
+{% block page_script %}
+<script src="{{ bundled_asset('view_ticket_status.bundle.ts') }}"></script>
+{% endblock %}

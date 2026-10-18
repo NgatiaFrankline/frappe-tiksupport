@@ -1,0 +1,176 @@
+{% extends "templates/web.html" %}
+
+{% macro helpdesk_multicolor_svg() %}
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="7 7.5 50 51.5" width="48" height="50" aria-hidden="true">
+	<!-- headband -->
+	<path d="M12 36V30a20 20 0 0 1 40 0v6" fill="none" stroke="#1E3A8A" stroke-width="5" stroke-linecap="round"/>
+	<!-- ear cups -->
+	<rect x="7" y="33" width="10" height="16" rx="5" fill="#2563EB"/>
+	<rect x="47" y="33" width="10" height="16" rx="5" fill="#2563EB"/>
+	<!-- microphone arm -->
+	<path d="M52 47v2a7 7 0 0 1-7 7h-8" fill="none" stroke="#1E3A8A" stroke-width="4" stroke-linecap="round"/>
+	<rect x="31" y="53" width="8" height="6" rx="3" fill="#F59E0B"/>
+	<!-- chat bubble -->
+	<path d="M22 22h20a4 4 0 0 1 4 4v8a4 4 0 0 1-4 4h-9l-6 5v-5h-5a4 4 0 0 1-4-4v-8a4 4 0 0 1 4-4z" fill="#10B981"/>
+	<!-- bubble dots -->
+	<circle cx="26" cy="30" r="2" fill="#fff"/>
+	<circle cx="32" cy="30" r="2" fill="#fff"/>
+	<circle cx="38" cy="30" r="2" fill="#fff"/>
+</svg>
+{% endmacro %}
+
+{% macro footer_icon(name) %}
+<svg class="ticket-footer__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  {%- if name == "mail" -%}<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>
+  {%- elif name == "phone" -%}<path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/>
+  {%- elif name == "map" -%}<path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+  {%- elif name == "check" -%}<circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-6"/>
+  {%- elif name == "inbox" -%}<path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.5 5.1L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.5-6.9A2 2 0 0 0 16.8 4H7.2a2 2 0 0 0-1.7 1.1z"/>
+  {%- elif name == "search" -%}<circle cx="11" cy="11" r="8"/><path d="M21 21l-4.3-4.3"/>
+  {%- elif name == "plus" -%}<circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/>
+  {%- elif name == "home" -%}<path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/>
+  {%- elif name == "life-buoy" -%}<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><path d="M4.9 4.9l4.3 4.3M14.8 14.8l4.3 4.3M14.8 9.2l4.3-4.3M4.9 19.1l4.3-4.3"/>
+  {%- elif name == "link" -%}<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+  {%- endif -%}
+</svg>
+{% endmacro %}
+
+{% block head_include %}
+  <link rel="stylesheet" href="{{ bundled_asset('ticket.bundle.css') }}">
+  {% if recaptcha_enabled %}
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  {% endif %}
+{% endblock %}
+
+{% block navbar %}
+<div class="tiksupport-ticket-scene" aria-hidden="true">
+  <img class="tiksupport-ticket-scene__dome" data-src="/assets/tiksupport/images/tiksupport-ticket-dome.svg" alt="">
+  <img class="tiksupport-ticket-scene__illustration" data-src="/assets/tiksupport/images/tiksupport-ticket-illustration.svg" alt="">
+</div>
+<nav class="navbar navbar-light navbar-expand-lg tiksupport-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="{{ home_page or '/' }}">
+      {%- if site_logo -%}
+        <img src="{{ site_logo }}" alt="{{ _('UoE e-Learning Help Desk') }}">
+      {%- else -%}
+        <span>{{ _("UoE e-Learning Help Desk") }}</span>
+      {%- endif -%}
+    </a>
+    <button class="navbar-toggler" type="button"
+      data-toggle="collapse"
+      data-target="#tiksupport-navbar-links"
+      aria-controls="tiksupport-navbar-links"
+      aria-expanded="false"
+      aria-label="{{ _('Toggle navigation') }}">
+      <svg class="tiksupport-navbar__toggle-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false">
+        <path class="toggle-line toggle-line--top" d="M4 6h16"/>
+        <path class="toggle-line toggle-line--middle" d="M4 12h16"/>
+        <path class="toggle-line toggle-line--bottom" d="M4 18h16"/>
+      </svg>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="tiksupport-navbar-links">
+      <ul class="navbar-nav ml-lg-auto">
+        {% for link in navbar_links %}
+        <li class="nav-item">
+          <a class="nav-link" href="{{ link.url }}">{{ link.label }}</a>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</nav>
+{% endblock %}
+
+{% block page_content %}
+<main
+  id="{% block page_id %}{% endblock %}"
+  class="container tiksupport-ticket-page"
+  data-csrf-token="{{ csrf_token }}"
+  data-recaptcha-enabled="{{ 'true' if recaptcha_enabled else 'false' }}"
+  {% block page_data_attrs %}{% endblock %}
+>
+  <header class="mb-5 text-left">
+    <h3 class="heading d-flex align-items-center my-3">
+      <span class="heading-icon mr-2" aria-hidden="true">{{ helpdesk_multicolor_svg() }}</span>
+      <span class="heading-title">{{ _("UoE e-Learning Help Desk") }}</span>
+    </h3>
+    <p class="lead my-3">
+			{{ _("Learning never stops. Neither do we.") }}
+		</p>
+		{% block header_link %}
+		<a href="/view-ticket-status">
+			<span aria-hidden="true">🤔</span>
+			{{ _("Already submitted a ticket? Check its status") }}
+			<span aria-hidden="true">→</span>
+		</a>
+		{% endblock %}
+
+	</header>
+
+  <section class="p-0 ticket-form-section">
+    <h5 class="form-title">{% block section_title %}{% endblock %}</h5>
+    <p class="form-text">{% block section_intro %}{% endblock %}</p>
+    {% block ticket_form %}{% endblock %}
+  </section>
+
+</main>
+
+{% block page_script %}{% endblock %}
+{% endblock %}
+
+{% block footer %}
+<footer id="ticket-footer" class="ticket-footer">
+  <div class="container">
+    <div class="row">
+
+      <div class="column col-lg-4 m-md-4 m-lg-0">
+        <h5 class="ticket-footer__title border-bottom border-dark pb-4">
+<!--					{{ footer_icon("inbox") }} -->
+					{{ _("What happens after you submit?") }}
+				</h5>
+        <ul class="ticket-footer__list">
+          {% for step in after_ticket_steps %}
+          <li>
+            {{ footer_icon("check") }}
+            <span>{{ step.step }}{% if step.link_label and step.url %} <a href="{{ step.url }}">{{ step.link_label }}</a> {{ step.link_suffix }}{% endif %}</span>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <div class="column col-lg-4 m-md-4 m-lg-0">
+        <h5 class="ticket-footer__title border-bottom border-dark pb-4">
+<!--          {{ footer_icon("link") }}-->
+					{{ _("Help links") }}
+				</h5>
+        <ul class="ticket-footer__list">
+          {% for link in help_links %}
+          <li>{{ footer_icon(link.icon or "link") }} <a href="{{ link.url }}">{{ link.label }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+
+			<div class="column col-lg-4 m-md-4 m-lg-0">
+				<h5 class="ticket-footer__title border-bottom border-dark pb-4">
+					<!--					{{ footer_icon("life-buoy") }} -->
+					{{ _("Contact us") }}</h5>
+				<ul class="ticket-footer__list">
+					{% for contact in support_contacts %}
+					<li>
+						{{ footer_icon("mail" if contact.contact_type == "Email" else "phone" if contact.contact_type == "Phone" else "map") }}
+						{% if contact.contact_type == "Email" %}
+						<span>{{ contact.label }}: <a target="_blank" class="email" href="mailto:{{ contact.value }}">{{ contact.value }}</a></span>
+						{% elif contact.contact_type == "Phone" %}
+						<span>{{ contact.label }}: <a href="tel:{{ contact.value }}">{{ contact.value }}</a></span>
+						{% else %}
+						<span>{{ contact.label }}: {{ contact.value }}</span>
+						{% endif %}
+					</li>
+					{% endfor %}
+				</ul>
+			</div>
+
+    </div>
+  </div>
+</footer>
+{% endblock %}

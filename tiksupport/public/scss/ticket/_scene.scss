@@ -1,0 +1,56 @@
+.tiksupport-ticket-scene {
+  --dome-width: min(50vw, 900px);
+  --illustration-width: min(24vw, 432px);
+
+  position: fixed;
+  z-index: 0;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background: transparent;
+
+  img {
+    opacity: 0;
+    transition: opacity 450ms ease-out;
+
+    &.is-loaded {
+      opacity: 1;
+    }
+  }
+
+  &__dome {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: var(--dome-width);
+    height: auto;
+  }
+
+  &__illustration {
+    position: absolute;
+    top: clamp(42px, 8vw, 106px);
+    right: 0;
+    width: var(--illustration-width);
+    height: auto;
+  }
+}
+
+.tiksupport-navbar,
+.tiksupport-ticket-page,
+#ticket-footer.ticket-footer {
+  position: relative;
+  z-index: 1;
+}
+
+
+@media (max-width: 599.98px) {
+  .tiksupport-ticket-scene {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tiksupport-ticket-scene img {
+    transition: none;
+  }
+}

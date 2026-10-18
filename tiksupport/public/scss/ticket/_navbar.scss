@@ -1,0 +1,104 @@
+/*!
+ * Copyright (c) 2026, UNIVERSITY OF ELDORET and Ngatia Frankline
+ * For license information, please see license.txt
+ */
+
+
+
+.tiksupport-navbar {
+  border-bottom: 1px solid var(--border-color);
+
+  .navbar-brand {
+		img {
+			height: 59px;
+			max-height: 59px;
+			width: auto;
+			max-width: 250px;
+		}//img
+	}//.navbar-brand
+
+  .navbar-nav {
+    gap: 0.5rem;
+
+    .nav-link {
+      white-space: nowrap;
+    }
+  }
+
+  .navbar-toggler {
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 42px;
+    padding: 0;
+    color: #fff;
+    background-color: var(--brand-color, #000066);
+    border: 1px solid var(--brand-color, #000066);
+    border-radius: 0.5rem;
+
+    &:focus {
+      outline: 0;
+      box-shadow: 0 0 0 0.2rem rgba(0, 0, 0, 0.18);
+    }
+
+    &[aria-expanded="true"] {
+      .toggle-line--top {
+        transform: translateY(6px) rotate(45deg);
+      }
+
+      .toggle-line--middle {
+        opacity: 0;
+      }
+
+      .toggle-line--bottom {
+        transform: translateY(-6px) rotate(-45deg);
+      }
+    }
+  }
+
+  &__toggle-icon {
+    overflow: visible;
+  }
+
+  .toggle-line {
+    transform-origin: center;
+    transition: transform 180ms ease, opacity 180ms ease;
+  }
+
+  @media (max-width: 991.98px) {
+    .navbar-toggler {
+      display: inline-flex;
+    }
+
+    .navbar-collapse {
+      margin-top: 0.75rem;
+      padding: 0.5rem;
+      background-color: #f3f3f3;
+      border-radius: 0.5rem;
+
+			.navbar-nav {
+				gap: 0.25rem;
+				display: block;
+
+				.nav-link {
+					padding: 0.7rem 0.85rem;
+					color: #fff;
+					border-radius: 0.35rem;
+
+					&:hover,
+					&:focus {
+						color: #fff;
+						background-color: rgba(255, 255, 255, 0.16);
+					}
+				}
+
+				.nav-item.active .nav-link {
+					color: #fff;
+					background-color: rgba(255, 255, 255, 0.22);
+				}
+			}//.navbar-nav
+    }//.navbar-collapse
+
+
+  }
+}//.tiksupport-navbar

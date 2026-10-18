@@ -1,0 +1,18 @@
+#create-ticket-page,
+#view-ticket-status-page {
+
+	header {
+		border-bottom: 1px solid var(--border-color);
+		padding-bottom: 1rem;
+
+		.heading-title {
+			font-weight: 600;
+			letter-spacing: -0.1px;
+		}//.heading-title
+
+		.heading-icon {
+			margin-right: 0.5rem;
+		}//.heading-icon
+	}//header
+
+}//#create-ticket-page, #view-ticket-status-page

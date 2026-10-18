@@ -1,0 +1,47 @@
+/*!
+ * Copyright (c) 2026, UNIVERSITY OF ELDORET and Ngatia Frankline
+ * For license information, please see license.txt
+ */
+
+
+
+#create-ticket-create-form,
+#view-ticket-status-form {
+  .form-label {
+    font-weight: 500;
+  }
+
+  textarea {
+    resize: vertical;
+  }
+
+	.required-mark {
+		color: var(--red-500, #dc3545);
+		font-weight: 700;
+	}
+
+	.ticket-select {
+		appearance: none;
+		padding-right: 2.5rem;
+		cursor: pointer;
+		background-repeat: no-repeat;
+		background-position: right 0.9rem center;
+		background-size: 1rem;
+		background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236c757d' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+	}
+}
+
+.ticket-form-label {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4rem;
+
+	&__icon {
+	  flex: 0 0 auto;
+	  color: var(--brand-color);
+	}
+}
+
+.ticket-recaptcha {
+	margin: 1.25rem 0;
+}

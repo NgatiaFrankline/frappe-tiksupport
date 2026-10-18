@@ -1,0 +1,27 @@
+/*!
+ * Copyright (c) 2026, UNIVERSITY OF ELDORET and Ngatia Frankline
+ * For license information, please see license.txt
+ */
+
+[data-slot="sidebar-item"] {
+	background-color: transparent;
+	color: var(--kustomize-sidebar-selector-text-color, #ffffff);
+
+	&:hover {
+		background-color: rgba(255, 255, 255, 0.12);
+	}
+
+	&[data-state="active"] {
+		background-color: var(--kustomize-sidebar-selector-color, rgba(255, 255, 255, 0.2));
+	}
+
+	button,
+	button * {
+		color: inherit;
+	}
+}
+
+[data-slot="sidebar-label"],
+[data-slot="sidebar-label"] * {
+	color: rgba(255, 255, 255, 0.72);
+}

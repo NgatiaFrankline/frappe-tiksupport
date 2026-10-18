@@ -1,0 +1,38 @@
+{
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "label",
+  "url",
+  "icon"
+ ],
+ "fields": [
+  {
+   "fieldname": "label",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Link Label",
+   "reqd": 1
+  },
+  {
+   "fieldname": "url",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "URL",
+   "reqd": 1
+  },
+  {
+   "fieldname": "icon",
+   "fieldtype": "Select",
+   "label": "Icon",
+   "options": "\nplus\nsearch\nhome\nlife-buoy\nlink\nmail\nphone\nmap\ncheck\ninbox"
+  }
+ ],
+ "istable": 1,
+ "module": "TikSupport",
+ "name": "TikSupport Quick Link",
+ "permissions": [],
+ "sort_field": "idx",
+ "sort_order": "ASC"
+}

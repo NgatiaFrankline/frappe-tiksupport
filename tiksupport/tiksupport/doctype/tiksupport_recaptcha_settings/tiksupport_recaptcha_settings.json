@@ -1,0 +1,55 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "creation": "2026-10-18 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "enabled",
+  "site_key",
+  "secret_key"
+ ],
+ "fields": [
+  {
+   "default": "0",
+   "description": "Show a Google reCAPTCHA v2 checkbox on both public ticket forms and require server-side verification.",
+   "fieldname": "enabled",
+   "fieldtype": "Check",
+   "label": "Enable Google reCAPTCHA"
+  },
+  {
+   "depends_on": "eval:doc.enabled",
+   "description": "The public site key is sent to browsers to render the checkbox.",
+   "fieldname": "site_key",
+   "fieldtype": "Data",
+   "label": "Site Key",
+   "mandatory_depends_on": "eval:doc.enabled"
+  },
+  {
+   "depends_on": "eval:doc.enabled",
+   "fieldname": "secret_key",
+   "fieldtype": "Password",
+   "label": "Secret Key",
+   "mandatory_depends_on": "eval:doc.enabled"
+  }
+ ],
+ "issingle": 1,
+ "links": [],
+ "modified": "2026-10-18 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "TikSupport",
+ "name": "TikSupport reCAPTCHA Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "read": 1,
+   "role": "System Manager",
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

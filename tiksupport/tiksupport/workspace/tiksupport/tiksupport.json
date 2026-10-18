@@ -1,0 +1,118 @@
+{
+ "charts": [],
+ "content": "[{\"id\":\"tiksupport-settings-header\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Support Configuration</b></span>\",\"col\":12}},{\"id\":\"tiksupport-after-ticket-card\",\"type\":\"card\",\"data\":{\"card_name\":\"Ticket Submission\",\"col\":6}},{\"id\":\"tiksupport-contact-card\",\"type\":\"card\",\"data\":{\"card_name\":\"Contacts\",\"col\":6}},{\"id\":\"tiksupport-footer-links-card\",\"type\":\"card\",\"data\":{\"card_name\":\"Quick Links\",\"col\":6}},{\"id\":\"tiksupport-navbar-links-card\",\"type\":\"card\",\"data\":{\"card_name\":\"Navbar Links\",\"col\":6}},{\"id\":\"tiksupport-recaptcha-card\",\"type\":\"card\",\"data\":{\"card_name\":\"Google reCAPTCHA\",\"col\":6}}]",
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "support",
+ "idx": 0,
+ "is_hidden": 0,
+ "label": "TikSupport",
+ "links": [
+  {
+   "hidden": 0,
+   "label": "Ticket Submission",
+   "link_count": 1,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "After Ticket Submission Instruction",
+   "link_count": 0,
+   "link_to": "TikSupport Settings",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "label": "Contacts",
+   "link_count": 1,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Support Contacts",
+   "link_count": 0,
+   "link_to": "TikSupport Contact Settings",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "label": "Quick Links",
+   "link_count": 1,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Footer Quick Links",
+   "link_count": 0,
+   "link_to": "TikSupport Footer Settings",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "label": "Navbar Links",
+   "link_count": 1,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Header Navbar Links",
+   "link_count": 0,
+   "link_to": "TikSupport Navbar Settings",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "label": "Google reCAPTCHA",
+   "link_count": 1,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Google reCAPTCHA Settings",
+   "link_count": 0,
+   "link_to": "TikSupport reCAPTCHA Settings",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  }
+ ],
+ "module": "TikSupport",
+ "name": "TikSupport",
+ "number_cards": [],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [
+  {
+   "role": "System Manager"
+  }
+ ],
+ "sequence_id": 41,
+ "shortcuts": [],
+ "title": "TikSupport"
+}

@@ -1,0 +1,78 @@
+{% extends "tiksupport/templates/ticket_base.html" %}
+
+{% block title %}{{ _("e-Learning Create Ticket") }}{% endblock %}
+
+{% block page_id %}create-ticket-page{% endblock %}
+
+{% block page_data_attrs %}data-ticket-created-label="{{ _('Your ticket number is') }}"{% endblock %}
+
+{% block section_title %}{{ _("Submit a ticket request") }}{% endblock %}
+
+{% block section_intro %}
+	{{ _("Please share the best email address to reach you. We’ll use it only to respond to your request.") }}
+{% endblock %}
+
+{% block ticket_form %}
+<form id="create-ticket-create-form" novalidate>
+  <p class="text-muted small">
+    <span class="required-mark" aria-hidden="true">*</span> {{ _("indicates a required field") }}
+  </p>
+  <div class="my-5">
+    <label class="form-label ticket-form-label" for="create-ticket-email">
+      <svg class="ticket-form-label__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+        <rect x="3" y="5" width="18" height="14" rx="2"/>
+        <path d="m3 7 9 6 9-6"/>
+      </svg>
+      {{ _("Email address") }}<span class="required-mark" aria-hidden="true"> *</span>
+    </label>
+    <input class="form-control" id="create-ticket-email" name="email" type="email" maxlength="254" autocomplete="email" required aria-required="true" placeholder="{{ _('Enter your email address') }}">
+    <div class="invalid-feedback">{{ _("Please enter a valid email address.") }}</div>
+  </div>
+  <div class="my-5">
+    <label class="form-label ticket-form-label" for="create-ticket-type">
+      <svg class="ticket-form-label__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+        <path d="M8 6h13M8 12h13M8 18h13"/>
+        <path d="M3 6h.01M3 12h.01M3 18h.01"/>
+      </svg>
+      {{ _("Subject") }}<span class="required-mark" aria-hidden="true"> *</span>
+    </label>
+    <select class="form-control ticket-select" id="create-ticket-type" name="ticket_type" required aria-required="true" aria-describedby="create-ticket-type-help">
+      <option value="" selected disabled>{{ _("Select a subject") }}</option>
+      {%- for ticket_type in ticket_types %}
+      <option value="{{ ticket_type }}">{{ ticket_type }}</option>
+      {%- endfor %}
+    </select>
+    <div class="invalid-feedback">{{ _("Please select a subject.") }}</div>
+		<small id="create-ticket-type-help" class="form-text text-muted d-block mb-2">
+			{{ _("Please choose the subject that best matches your problem. This helps us send your request to the right team.") }}
+		</small>
+  </div>
+  <div class="my-5">
+    <label class="form-label ticket-form-label" for="create-ticket-description">
+      <svg class="ticket-form-label__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+        <path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8v.5z"/>
+      </svg>
+      {{ _("How can we help?") }}<span class="required-mark" aria-hidden="true"> *</span>
+    </label>
+    <textarea class="form-control" id="create-ticket-description" name="description" rows="5" maxlength="10000" required aria-required="true"></textarea>
+    <div class="invalid-feedback">{{ _("Please describe how we can help.") }}</div>
+  </div>
+  {% if recaptcha_enabled %}
+  <div class="ticket-recaptcha">
+    <div class="g-recaptcha" data-sitekey="{{ recaptcha_site_key }}"></div>
+  </div>
+  {% endif %}
+  <div id="create-ticket-create-result" class="my-5" role="status" aria-live="polite"></div>
+  <button class="btn btn-primary" type="submit">
+    <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+      <path d="m22 2-7 20-4-9-9-4Z"/>
+      <path d="M22 2 11 13"/>
+    </svg>
+    {{ _("Submit") }}
+  </button>
+</form>
+{% endblock %}
+
+{% block page_script %}
+<script src="{{ bundled_asset('create_ticket.bundle.ts') }}"></script>
+{% endblock %}
