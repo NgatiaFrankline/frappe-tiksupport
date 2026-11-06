@@ -1,0 +1,41 @@
+{
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "label",
+  "url",
+  "target"
+ ],
+ "fields": [
+  {
+   "fieldname": "label",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Policy Label",
+   "reqd": 1
+  },
+  {
+   "fieldname": "url",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "URL",
+   "reqd": 1
+  },
+  {
+   "default": "_self",
+   "fieldname": "target",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Link Target",
+   "options": "_self\n_blank",
+   "reqd": 1
+  }
+ ],
+ "istable": 1,
+ "module": "TikSupport",
+ "name": "TikSupport Policy Link",
+ "permissions": [],
+ "sort_field": "idx",
+ "sort_order": "ASC"
+}

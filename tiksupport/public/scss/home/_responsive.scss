@@ -1,0 +1,86 @@
+.tiksupport-home {
+  @media (max-width: 800px) {
+    .hero,
+    .path,
+    .top-knowledge-base-list {
+      display: block;
+    }
+
+    .hero {
+      padding-top: 62px;
+    }
+
+    .orbit {
+      width: min(100%, 460px);
+      margin-top: 65px;
+    }
+
+    .path > div:first-child,
+    .top-knowledge-base-intro {
+      margin-bottom: 38px;
+    }
+
+    .steps {
+      grid-template-columns: 1fr;
+    }
+
+    .steps article {
+      min-height: 105px;
+    }
+
+    .top-knowledge-base-list {
+      padding-top: 54px;
+      padding-bottom: 60px;
+    }
+
+    .knowledge-articles {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 480px) {
+    .hero,
+    .path,
+    .top-knowledge-base-list {
+      padding-right: 22px;
+      padding-left: 22px;
+    }
+
+    .actions {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .orbit-card.right {
+      right: -5%;
+    }
+
+    .orbit-card.bottom {
+      left: 0;
+    }
+
+    .orbit-card {
+      padding: 9px;
+    }
+
+    .orbit-card small {
+      display: none;
+    }
+
+    .knowledge-articles {
+      grid-template-columns: 1fr;
+    }
+
+    .knowledge-article {
+      grid-template-columns: 38px minmax(0, 1fr) auto;
+      gap: 10px;
+      padding: 12px;
+    }
+
+    .knowledge-rank {
+      width: 38px;
+      height: 38px;
+    }
+  }
+}

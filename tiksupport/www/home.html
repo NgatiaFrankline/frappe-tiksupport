@@ -1,0 +1,102 @@
+{% extends "tiksupport/templates/ticket_base.html" %}
+
+{% block title %}{{ _("UoE e-Learning Help Desk") }}{% endblock %}
+
+{% block head_include %}
+{{ super() }}
+<link rel="stylesheet" href="{{ bundled_asset('home.bundle.css') }}">
+{% endblock %}
+
+{% block page_id %}home-page{% endblock %}
+
+{% block page_content %}
+<div class="tiksupport-home-scene" aria-hidden="true">
+  <canvas class="home-canvas"></canvas>
+</div>
+<div class="tiksupport-home">
+  <section class="hero" aria-labelledby="home-heading">
+    <div class="hero-copy">
+      <p class="eyebrow"><span></span>{{ _("Your learning, uninterrupted") }}</p>
+      <h2 id="home-heading">{{ _("When the LMS gets stuck,") }} <em>{{ _("we get you moving.") }}</em></h2>
+      <p class="intro">
+        {{ _("A friendly support desk for every UoE e-Learning question — from a missing course to a mysterious error message.") }}
+      </p>
+      <div class="actions">
+        <a class="primary" href="/create-ticket">
+          {{ _("Tell us what happened") }} <span aria-hidden="true">→</span>
+        </a>
+        <a class="secondary" href="/view-ticket-status">
+          <span class="status-dot" aria-hidden="true"></span>
+          {{ _("Check a ticket") }}
+        </a>
+      </div>
+      <p class="note"><span aria-hidden="true">✦</span> {{ _("No account needed to ask for help") }}</p>
+    </div>
+
+    <div class="orbit" aria-label="{{ _('Support journey illustration') }}" role="img">
+      <div class="orbit-ring outer"></div>
+      <div class="orbit-ring inner"></div>
+      <div class="orbit-core">
+        <span class="core-icon" aria-hidden="true">?</span>
+        <strong>{{ _("Need a hand?") }}</strong>
+        <small>{{ _("Start here") }}</small>
+      </div>
+      <div class="orbit-card top">
+        <span class="mini-icon green">✓</span>
+        <span><strong>{{ _("Ticket received") }}</strong><small>{{ _("We'll take it from here") }}</small></span>
+      </div>
+      <div class="orbit-card right">
+        <span class="mini-icon yellow">↗</span>
+        <span><strong>{{ _("Back on track") }}</strong><small>{{ _("Keep learning") }}</small></span>
+      </div>
+      <div class="orbit-card bottom">
+        <span class="mini-icon coral">✦</span>
+        <span><strong>{{ _("Human support") }}</strong><small>{{ _("Real people, real answers") }}</small></span>
+      </div>
+    </div>
+  </section>
+
+  <section class="path" id="how-it-works" aria-labelledby="path-heading">
+    <div>
+      <p class="eyebrow"><span></span>{{ _("A simple path forward") }}</p>
+      <h3 id="path-heading">{{ _("Three steps. Zero guesswork.") }}</h3>
+    </div>
+    <div class="steps">
+			<article><div class="d-block"><span class="step">01</span></div><h5 class="step-title">{{ _("Tell Us") }}</h5><p>{{ _("Describe the bump in the road. Screenshots and context are always welcome.") }}</p></article>
+			<article><div class="d-block"><span class="step">02</span></div><h5 class="step-title">{{ _("We Untangle It") }}</h5><p>{{ _("Your request reaches the right support team, with updates sent to your email.") }}</p></article>
+			<article><div class="d-block"><span class="step">03</span></div><h5 class="step-title">{{ _("Keep learning") }}</h5><p>{{ _("Use your ticket number to follow progress while you get back to learning.") }}</p></article>
+    </div>
+  </section>
+
+  <section class="top-knowledge-base-list" id="top-knowledge-base-list" aria-labelledby="top-knowledge-base-heading">
+    <div class="top-knowledge-base-intro">
+      <p class="eyebrow"><span></span>{{ _("Knowledge base") }}</p>
+      <h3 id="top-knowledge-base-heading">{{ _("Popular answers, ready when you are.") }}</h3>
+      <p class="top-knowledge-base-description">
+        {{ _("Explore the most-read guides from our e-Learning support team.") }}
+      </p>
+      <a class="browse-knowledge-base" href="/knowledge-base">
+        {{ _("Browse all articles") }} <span aria-hidden="true">↗</span>
+      </a>
+    </div>
+    <div class="knowledge-articles">
+      {% for article in knowledge_articles %}
+      <a class="knowledge-article" href="/knowledge-base-view/{{ article.name }}">
+        <span class="knowledge-rank" aria-hidden="true">{{ "%02d"|format(loop.index) }}</span>
+        <span class="knowledge-article-content">
+          <strong>{{ article.title }}</strong>
+          {% if article.category_name %}<small>{{ article.category_name }}</small>{% endif %}
+        </span>
+        <span class="knowledge-article-meta">
+          <small>{{ article.views or 0 }} {{ _("reads") }}</small>
+          <span class="knowledge-article-arrow" aria-hidden="true">↗</span>
+        </span>
+      </a>
+      {% else %}
+      <p class="knowledge-articles-empty">{{ _("No knowledge base articles have been published yet.") }}</p>
+      {% endfor %}
+    </div>
+  </section>
+</div>
+<script defer src="{{ bundled_asset('home_canvas.bundle.ts') }}"></script>
+{% endblock %}

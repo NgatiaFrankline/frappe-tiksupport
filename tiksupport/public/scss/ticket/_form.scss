@@ -45,3 +45,37 @@
 .ticket-recaptcha {
 	margin: 1.25rem 0;
 }
+
+.ticket-consent {
+	padding: 0.9rem 1rem;
+	border: 1px solid rgba(47, 91, 77, 0.18);
+	border-left: 4px solid var(--secondary-color);
+	border-radius: 0.75rem;
+	background: linear-gradient(135deg, rgba(47, 91, 77, 0.07), rgba(47, 91, 77, 0.015));
+
+	.form-check {
+		display: grid;
+		grid-template-columns: 1.5rem minmax(0, 1fr);
+		gap: 0.65rem;
+		align-items: start;
+		padding-left: 0;
+	}
+
+	.form-check-input {
+		position: static;
+		float: none;
+		width: 1.5rem !important;
+		height: 1.5rem !important;
+		margin: 0.1rem 0 0;
+	}
+
+	.form-check-label {
+		cursor: pointer;
+		font-weight: 600;
+		line-height: 1.5;
+	}
+
+	.invalid-feedback {
+		grid-column: 2;
+	}
+}

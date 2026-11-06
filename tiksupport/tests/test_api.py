@@ -33,6 +33,7 @@ class TestTikSupportAPI(FrappeTestCase):
             "student@example.com",
             "Cannot sign in",
             "<script>alert('x')</script>\nPlease help.",
+            email_communication_consent=True,
         )
         ticket = frappe.get_doc("HD Ticket", result["name"])
 
@@ -41,6 +42,8 @@ class TestTikSupportAPI(FrappeTestCase):
         self.assertEqual(ticket.subject, "Cannot sign in")
         self.assertEqual(ticket.owner, "Administrator")
         self.assertEqual(ticket.via_customer_portal, 0)
+        self.assertEqual(ticket.email_communication_consent, 1)
+        self.assertTrue(ticket.email_communication_consent_at)
         self.assertNotIn("<script>", ticket.description)
         self.assertFalse(has_permission(ticket, user="Guest"))
 
@@ -58,11 +61,25 @@ class TestTikSupportAPI(FrappeTestCase):
 
     def test_ticket_submission_rejects_invalid_email(self):
         with self.assertRaises(frappe.InvalidEmailAddressError):
-            create_ticket("not-an-email", "Cannot sign in", "Please help.")
+            create_ticket(
+                "not-an-email",
+                "Cannot sign in",
+                "Please help.",
+                email_communication_consent=True,
+            )
 
     def test_ticket_submission_rejects_unknown_ticket_type(self):
         with self.assertRaises(frappe.ValidationError):
-            create_ticket("student@example.com", "No such type", "Please help.")
+            create_ticket(
+                "student@example.com",
+                "No such type",
+                "Please help.",
+                email_communication_consent=True,
+            )
+
+    def test_ticket_submission_requires_email_communication_consent(self):
+        with self.assertRaises(frappe.ValidationError):
+            create_ticket("student@example.com", "Cannot sign in", "Please help.")
 
     def test_quick_link_urls_reject_unsafe_schemes(self):
         validate_settings_url("/view-ticket-status")

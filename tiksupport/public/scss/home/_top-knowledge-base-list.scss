@@ -1,0 +1,161 @@
+.tiksupport-home {
+  .top-knowledge-base-list {
+    display: grid;
+    grid-template-columns: .65fr 1.35fr;
+    align-items: start;
+    gap: 6vw;
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 70px 5vw 82px;
+    border-top: 1px solid rgba(19, 34, 56, .1);
+    background: transparent;
+  }
+
+  .top-knowledge-base-intro {
+    position: sticky;
+    top: 32px;
+
+		h3 {
+			max-width: 350px;
+			margin: 0 0 16px;
+			color: var(--heading-color, var(--text-color, #132238));
+			//font-size: clamp(30px, 3.2vw, 43px);
+			font-weight: 800;
+			letter-spacing: -.055em;
+			line-height: 1.05;
+		}//h3
+  }//.top-knowledge-base-intro
+
+  .top-knowledge-base-description {
+    max-width: 330px;
+    margin: 0;
+    color: var(--text-muted, #627285);
+    font-size: 14px;
+    line-height: 1.65;
+  }
+
+  .browse-knowledge-base {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 26px;
+    color: var(--brand-color, #2c6e9e);
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+
+    span {
+      display: grid;
+      width: 30px;
+      height: 30px;
+      place-items: center;
+      border: 1px solid currentColor;
+      border-radius: 50%;
+      transition: transform 160ms ease;
+    }
+
+    &:hover span {
+      transform: translate(2px, -2px);
+    }
+  }
+
+  .knowledge-articles {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 11px;
+  }
+
+  .knowledge-article {
+    display: grid;
+    min-width: 0;
+    min-height: 94px;
+    grid-template-columns: 42px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 12px;
+    padding: 14px;
+    border: 1px solid rgba(19, 34, 56, .09);
+    border-radius: 12px;
+    color: var(--text-color, #222);
+    background: var(--body-bg-color, #fff);
+    box-shadow: 0 8px 24px rgba(19, 34, 56, .04);
+    text-decoration: none;
+    transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+
+    &:hover,
+    &:focus-visible {
+      border-color: var(--brand-color, #2c6e9e);
+      box-shadow: 0 12px 28px rgba(19, 34, 56, .1);
+      color: var(--text-color, #222);
+      transform: translateY(-2px);
+      text-decoration: none;
+    }
+  }
+
+  .knowledge-rank {
+    display: grid;
+    width: 42px;
+    height: 42px;
+    place-items: center;
+    border-radius: 13px;
+    color: var(--heading-color, var(--text-color, #132238));
+    background: var(--secondary-color, #f6c453);
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: -.03em;
+  }
+
+  .knowledge-article-content {
+    display: block;
+    min-width: 0;
+
+    strong {
+      display: -webkit-box;
+      overflow: hidden;
+      color: var(--heading-color, var(--text-color, #132238));
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.4;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+    }
+
+    small {
+      display: inline-block;
+      max-width: 100%;
+      overflow: hidden;
+      margin-top: 6px;
+      color: var(--text-muted, #627285);
+      font-size: 10px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+
+  .knowledge-article-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    small {
+      color: var(--text-muted, #627285);
+      font-size: 10px;
+      white-space: nowrap;
+    }
+  }
+
+  .knowledge-article-arrow {
+    color: var(--brand-color, #2c6e9e);
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .knowledge-articles-empty {
+    grid-column: 1 / -1;
+    margin: 0;
+    padding: 28px;
+    border: 1px dashed rgba(19, 34, 56, .2);
+    border-radius: 12px;
+    color: var(--text-muted, #627285);
+    text-align: center;
+  }
+}

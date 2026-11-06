@@ -4,5 +4,7 @@
 
 [post_model_sync]
 tiksupport.patches.split_ticket_page_settings
+tiksupport.patches.split_footer_policy_settings
+tiksupport.patches.ensure_ticket_email_consent_fields
 tiksupport.patches.repair_recaptcha_settings_doctype
 # Patches added in this section will be executed after doctypes are migrated

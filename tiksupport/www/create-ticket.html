@@ -57,6 +57,15 @@
     <textarea class="form-control" id="create-ticket-description" name="description" rows="5" maxlength="10000" required aria-required="true"></textarea>
     <div class="invalid-feedback">{{ _("Please describe how we can help.") }}</div>
   </div>
+  <div class="ticket-consent my-5">
+    <div class="form-check">
+      <input class="form-check-input" id="create-ticket-email-consent" name="email_communication_consent" type="checkbox" value="1" required aria-required="true" aria-describedby="create-ticket-email-consent-error">
+      <label class="form-check-label" for="create-ticket-email-consent">
+        {{ _("I consent to my email being used only for ticket communication during the support period.") }}
+      </label>
+      <div class="invalid-feedback" id="create-ticket-email-consent-error">{{ _("Consent is required to submit.") }}</div>
+    </div>
+  </div>
   {% if recaptcha_enabled %}
   <div class="ticket-recaptcha">
     <div class="g-recaptcha" data-sitekey="{{ recaptcha_site_key }}"></div>

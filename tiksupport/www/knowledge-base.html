@@ -1,0 +1,76 @@
+{% extends "tiksupport/templates/ticket_base.html" %}
+
+{% block title %}{{ _("Knowledge Base") }}{% endblock %}
+
+{% block head_include %}
+{{ super() }}
+<link rel="stylesheet" href="{{ bundled_asset('knowledge_base.bundle.css') }}">
+{% endblock %}
+
+{% block page_content %}
+<main id="knowledge-base-page" class="tiksupport-knowledge-base">
+  <div class="knowledge-base-inner">
+    <header class="knowledge-base-hero">
+      <p class="knowledge-base-eyebrow"><span aria-hidden="true">✦</span> {{ _("UoE e-Learning support library") }}</p>
+      <h1>{{ _("Find an answer. Get back to learning.") }}</h1>
+      <p class="knowledge-base-lead">
+        {{ _("Browse practical guides written to help you solve common e-Learning questions.") }}
+      </p>
+      <form class="knowledge-base-search" action="/knowledge-base" method="get" role="search">
+        <label class="sr-only" for="knowledge-base-search">{{ _("Search knowledge base") }}</label>
+        <input
+          id="knowledge-base-search"
+          type="search"
+          name="q"
+          value="{{ search_query }}"
+          placeholder="{{ _('Try “course access” or “password”') }}"
+        >
+        <button type="submit">
+          <span>{{ _("Search guides") }}</span>
+          <span aria-hidden="true">⌕</span>
+        </button>
+      </form>
+    </header>
+
+    <section class="knowledge-base-results" aria-labelledby="knowledge-base-results-heading">
+      <div class="knowledge-base-results-heading">
+        <div>
+          <p class="knowledge-base-kicker">{{ _("Knowledge, made practical") }}</p>
+          <h2 id="knowledge-base-results-heading">
+            {% if search_query %}{{ _("Search results") }}{% else %}{{ _("All guides") }}{% endif %}
+          </h2>
+        </div>
+        <span class="knowledge-base-count">{{ article_count }} {{ _("articles") }}</span>
+      </div>
+
+      {% if articles %}
+      <div class="knowledge-base-grid">
+        {% for article in articles %}
+        <a class="knowledge-base-card" href="/knowledge-base-view/{{ article.name }}">
+          <div class="knowledge-base-card-meta">
+            <span class="knowledge-base-category">{{ article.category_name or _("General") }}</span>
+            <span class="knowledge-base-views">{{ article.views or 0 }} {{ _("reads") }}</span>
+          </div>
+          <h3>{{ article.title }}</h3>
+          <span class="knowledge-base-card-link">{{ _("Read guide") }} <span aria-hidden="true">→</span></span>
+        </a>
+        {% endfor %}
+      </div>
+      {% else %}
+      <div class="knowledge-base-empty">
+        <span aria-hidden="true">⌕</span>
+        {% if search_query %}
+        <h3>{{ _("No guides found") }}</h3>
+        <p>{{ _("Try a different search, or browse all published guides.") }}</p>
+        <a href="/knowledge-base">{{ _("Show all guides") }} →</a>
+        {% else %}
+        <h3>{{ _("Guides are on their way") }}</h3>
+        <p>{{ _("There are no published knowledge base articles yet.") }}</p>
+        <a href="/create-ticket">{{ _("Ask the support team") }} →</a>
+        {% endif %}
+      </div>
+      {% endif %}
+    </section>
+  </div>
+</main>
+{% endblock %}

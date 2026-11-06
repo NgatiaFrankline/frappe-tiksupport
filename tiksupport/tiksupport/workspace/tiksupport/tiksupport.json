@@ -1,6 +1,6 @@
 {
  "charts": [],
- "content": "[{\"id\":\"tiksupport-settings-header\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Support Configuration</b></span>\",\"col\":12}},{\"id\":\"tiksupport-after-ticket-card\",\"type\":\"card\",\"data\":{\"card_name\":\"Ticket Submission\",\"col\":6}},{\"id\":\"tiksupport-contact-card\",\"type\":\"card\",\"data\":{\"card_name\":\"Contacts\",\"col\":6}},{\"id\":\"tiksupport-footer-links-card\",\"type\":\"card\",\"data\":{\"card_name\":\"Quick Links\",\"col\":6}},{\"id\":\"tiksupport-navbar-links-card\",\"type\":\"card\",\"data\":{\"card_name\":\"Navbar Links\",\"col\":6}},{\"id\":\"tiksupport-recaptcha-card\",\"type\":\"card\",\"data\":{\"card_name\":\"Google reCAPTCHA\",\"col\":6}}]",
+ "content": "[{\"id\":\"tiksupport-settings-header\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Support Configuration</b></span>\",\"col\":12}},{\"id\":\"tiksupport-after-ticket-card\",\"type\":\"card\",\"data\":{\"card_name\":\"Ticket Submission\",\"col\":6}},{\"id\":\"tiksupport-contact-card\",\"type\":\"card\",\"data\":{\"card_name\":\"Contacts\",\"col\":6}},{\"id\":\"tiksupport-footer-links-card\",\"type\":\"card\",\"data\":{\"card_name\":\"Footer Settings\",\"col\":6}},{\"id\":\"tiksupport-navbar-links-card\",\"type\":\"card\",\"data\":{\"card_name\":\"Navbar Links\",\"col\":6}},{\"id\":\"tiksupport-recaptcha-card\",\"type\":\"card\",\"data\":{\"card_name\":\"Google reCAPTCHA\",\"col\":6}}]",
  "doctype": "Workspace",
  "for_user": "",
  "hide_custom": 0,
@@ -47,8 +47,8 @@
   },
   {
    "hidden": 0,
-   "label": "Quick Links",
-   "link_count": 1,
+   "label": "Footer Settings",
+   "link_count": 2,
    "link_type": "DocType",
    "onboard": 0,
    "type": "Card Break"
@@ -59,6 +59,16 @@
    "label": "Footer Quick Links",
    "link_count": 0,
    "link_to": "TikSupport Footer Settings",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Policies Links",
+   "link_count": 0,
+   "link_to": "TikSupport Policy Settings",
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"

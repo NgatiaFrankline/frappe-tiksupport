@@ -1,0 +1,43 @@
+{% extends "tiksupport/templates/ticket_base.html" %}
+
+{% block title %}{{ article.title }} | {{ _("Knowledge Base") }}{% endblock %}
+
+{% block head_include %}
+{{ super() }}
+<link rel="stylesheet" href="{{ bundled_asset('knowledge_base.bundle.css') }}">
+{% endblock %}
+
+{% block page_content %}
+<main id="knowledge-base-article-page" class="tiksupport-knowledge-article">
+  <div class="knowledge-article-inner">
+    <a class="knowledge-article-back" href="/knowledge-base">
+      <span aria-hidden="true">←</span> {{ _("All knowledge base guides") }}
+    </a>
+
+    <header class="knowledge-article-header">
+      <p class="knowledge-article-category">{{ article.category_name or _("e-Learning guide") }}</p>
+      <h1>{{ article.title }}</h1>
+      <div class="knowledge-article-meta">
+        {% if article.published_date %}
+        <span>{{ _("Published") }} {{ article.published_date }}</span>
+        <span class="knowledge-article-meta-dot" aria-hidden="true"></span>
+        {% endif %}
+        <span>{{ article.views or 0 }} {{ _("reads") }}</span>
+      </div>
+    </header>
+
+    <article class="knowledge-article-body">
+      <div class="knowledge-article-content">{{ article.content|safe }}</div>
+    </article>
+
+    <aside class="knowledge-article-support">
+      <span class="knowledge-article-support-mark" aria-hidden="true">?</span>
+      <div>
+        <h2>{{ _("Still need a hand?") }}</h2>
+        <p>{{ _("If this guide didn't solve it, send our support team a ticket and we'll help you out.") }}</p>
+      </div>
+      <a href="/create-ticket">{{ _("Contact support") }} <span aria-hidden="true">→</span></a>
+    </aside>
+  </div>
+</main>
+{% endblock %}

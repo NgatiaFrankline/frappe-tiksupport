@@ -102,10 +102,20 @@ def create_ticket(
     ticket_type: str,
     description: str,
     recaptcha_response: str = "",
+    email_communication_consent: bool | str | int = False,
 ) -> dict[str, str]:
     email = (email or "").strip()
     ticket_type = (ticket_type or "").strip()
     description = (description or "").strip()
+
+    has_email_communication_consent = email_communication_consent is True or (
+        isinstance(email_communication_consent, (int, str))
+        and str(email_communication_consent).strip().casefold() in {"1", "true", "on"}
+    )
+    if not has_email_communication_consent:
+        frappe.throw(
+            _("Please consent to using your email for communication about this support request only.")
+        )
 
     if len(email) > 254:
         frappe.throw(_("Email address is too long."))
@@ -134,6 +144,8 @@ def create_ticket(
             "raised_by": validated_email.casefold(),
             "owner": "Administrator",
             "via_customer_portal": 0,
+            "email_communication_consent": 1,
+            "email_communication_consent_at": frappe.utils.now_datetime(),
         }
     ).insert(ignore_permissions=True)
 

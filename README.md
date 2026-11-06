@@ -12,7 +12,11 @@ The app source lives at `workspace/frappe-bench/apps/tiksupport`, as a sibling o
 
 This repository's Docker bench mounts `workspace/frappe-bench/apps`. Add `tiksupport` to `FRAPPE_APPS` in `.env` so bench bootstrap retains the app and includes it when preparing a new site. Ensure the app source is present at `workspace/frappe-bench/apps/tiksupport` before bootstrapping. It is already installed in the current development bench.
 
-Open `/tiksupport` on the site, for example `http://localhost:8000/tiksupport`.
+The site root is the public TikSupport homepage, for example
+`http://localhost:8000/`. From there, students can create a ticket at
+`/create-ticket`, check an existing ticket at `/view-ticket-status`, or browse
+published Helpdesk articles at `/knowledge-base`. Each article has a public
+detail page at `/knowledge-base-view/<article>`.
 
 ### Installing in Another Bench
 

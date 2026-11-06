@@ -9,6 +9,7 @@ def set_ticket_context(context):
     after_ticket_settings = frappe.get_single("TikSupport Settings")
     contact_settings = frappe.get_single("TikSupport Contact Settings")
     footer_settings = frappe.get_single("TikSupport Footer Settings")
+    policy_settings = frappe.get_single("TikSupport Policy Settings")
     navbar_settings = frappe.get_single("TikSupport Navbar Settings")
     recaptcha_settings = frappe.get_single("TikSupport reCAPTCHA Settings")
     context.recaptcha_enabled = bool(recaptcha_settings.enabled)
@@ -33,11 +34,18 @@ def set_ticket_context(context):
             "url": "/view-ticket-status",
             "icon": "search",
         },
+        {"label": _("Knowledge base"), "url": "/knowledge-base", "icon": "link"},
         {"label": _("Home"), "url": "/", "icon": "home"},
+    ]
+    context.policies = policy_settings.get("policies") or [
+        {"label": _("Privacy Policy"), "url": "/privacy-policy", "target": "_self"},
+        {"label": _("Terms of Service"), "url": "/terms-of-service", "target": "_self"},
+        {"label": _("Cookies Policy"), "url": "/cookies-policy", "target": "_self"},
     ]
     context.navbar_links = navbar_settings.get("navbar_links") or [
         {"label": _("Create ticket"), "url": "/create-ticket"},
         {"label": _("Check ticket status"), "url": "/view-ticket-status"},
+        {"label": _("Knowledge base"), "url": "/knowledge-base"},
         {"label": _("Go to eLearning"), "url": "/"},
     ]
     return context

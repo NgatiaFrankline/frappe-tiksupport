@@ -26,6 +26,7 @@ if (page && createForm && createResult) {
           email: form.get("email"),
           ticket_type: form.get("ticket_type"),
           description: form.get("description"),
+          email_communication_consent: form.get("email_communication_consent") === "1",
           recaptcha_response: recaptchaResponse,
         },
       );

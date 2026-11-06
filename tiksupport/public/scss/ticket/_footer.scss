@@ -9,14 +9,15 @@
   font-size: 0.8125rem;
   color: rgba(255, 255, 255, 0.85);
   background-color: var(--brand-color);
+  text-align: left;
 
 	.column {
 		margin-bottom: 3rem;
 	}//.column
 
-	.ticket-footer__title {
+	.title {
     display: flex;
-    align-items: center;
+    justify-content: flex-start;
     gap: 0.5rem;
     margin-bottom: 1rem;
     //font-size: 0.9375rem;
@@ -25,7 +26,7 @@
 		letter-spacing: -0.1px;
   }
 
-  .ticket-footer__list {
+  .list {
     margin: 0;
     padding: 0;
     list-style: none;
@@ -47,11 +48,69 @@
     }
   }
 
-  .ticket-footer__icon {
+  .icon {
     flex-shrink: 0;
-    margin-top: 0.15rem;
     color: var(--secondary-color) !important;
+		fill: none !important;
+		stroke: var(--secondary-color) !important;
+		margin: 0.15rem 0 0 0;
   }
+
+  .copyright {
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
+    //border-top: 1px solid rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.72);
+    text-align: left;
+  }
+
+  .policies {
+    margin: 1.5rem 0 0;
+    padding: 1.25rem 0 0;
+    list-style: none;
+
+    li {
+			a {
+				color: rgba(255, 255, 255, 0.7) !important;
+				text-decoration: none;
+
+				&:hover {
+					color: var(--secondary-color) !important;
+				}
+			}
+
+			& + li {
+				margin-top: 0.5rem;
+			}
+		}
+  }//.policies
+
+  .login-area {
+		margin-top: 1.5rem;
+		padding-top: 1.25rem;
+
+    .icon {
+      display: block;
+      margin: 0;
+    }
+
+    a {
+			color: rgba(255, 255, 255, 0.5) !important;
+			text-decoration: none;
+
+			svg {
+				stroke: rgba(255, 255, 255, 0.5) !important;
+			}//svg
+
+			&:hover {
+				color: var(--secondary-color) !important;
+
+				svg {
+					stroke: var(--secondary-color) !important;
+				}
+			}//&:hover
+		}//a
+  }//.login-area
 
   a {
     color: #fff !important;

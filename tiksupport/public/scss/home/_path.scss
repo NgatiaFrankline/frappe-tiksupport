@@ -1,0 +1,62 @@
+.tiksupport-home {
+  .path {
+    display: grid;
+    grid-template-columns: .7fr 1.3fr;
+    gap: 8vw;
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 74px 5vw 86px;
+    border-top: 1px solid #e3e3dc;
+  }
+
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+
+    article {
+      min-width: 0;
+      padding-top: 4px;
+
+			&:nth-child(1) {
+				.step {
+					color: var(--secondary-color, #cc9933);
+				}//.step
+			}//&:nth-child(1)
+
+			&:nth-child(2) {
+				.step {
+					color: var(--brand-color, #000066);
+				}//.step
+			}//&:nth-child(2)
+
+			&:nth-child(3) {
+				.step {
+					color: var(--primary-color, #660000);
+				}//.step
+			}//&:nth-child(3)
+
+			.step {
+				display: inline-block;
+				margin: 15px 0 20px;
+				font-size: 24px;
+				font-weight: 800;
+				letter-spacing: .1em;
+				padding: 2rem;
+				border-radius: 4px;
+				background: rgba(0,0,0,.05)
+			}//.step
+
+			.step-title {
+				font-weight: 600;
+			}//.step-title
+    }
+
+    p {
+      margin: 0;
+      color: var(--text-muted, #627285);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+  }
+}
