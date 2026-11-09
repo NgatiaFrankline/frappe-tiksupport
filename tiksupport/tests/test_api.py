@@ -11,6 +11,7 @@ from tiksupport.api import (
     check_ticket_status,
     create_ticket,
     inject_helpdesk_sidebar_assets,
+    reply_to_ticket,
     verify_recaptcha,
 )
 
@@ -58,6 +59,29 @@ class TestTikSupportAPI(FrappeTestCase):
         self.assertNotIn("description", result)
         with self.assertRaises(frappe.DoesNotExistError):
             check_ticket_status(ticket.name, "someone-else@example.com")
+
+    def test_guest_can_read_and_reply_to_ticket_conversation(self):
+        created = create_ticket(
+            "student@example.com",
+            "Cannot sign in",
+            "Please help.",
+            email_communication_consent=True,
+        )
+
+        result = check_ticket_status(created["name"], "student@example.com")
+        self.assertIn("conversation", result)
+
+        reply = reply_to_ticket(
+            created["name"],
+            "STUDENT@example.com",
+            "I have attached more details.",
+        )
+        self.assertTrue(
+            any(
+                "I have attached more details." in communication["content"]
+                for communication in reply["conversation"]
+            )
+        )
 
     def test_ticket_submission_rejects_invalid_email(self):
         with self.assertRaises(frappe.InvalidEmailAddressError):

@@ -4,7 +4,21 @@
 
 {% block page_id %}view-ticket-status-page{% endblock %}
 
-{% block page_data_attrs %}data-status-label="{{ _('Status') }}"{% endblock %}
+{% block page_data_attrs %}
+data-status-label="{{ _('Status') }}"
+data-status-subject-label="{{ _('Subject') }}"
+data-status-email-note="{{ _('This status was retrieved securely using your ticket number and email address.') }}"
+data-status-again-label="{{ _('Check another ticket') }}"
+data-status-conversation-label="{{ _('Conversation') }}"
+data-status-empty-conversation="{{ _('No messages have been exchanged yet.') }}"
+data-status-reply-label="{{ _('Send a reply') }}"
+data-status-reply-placeholder="{{ _('Write your message to the support team…') }}"
+data-status-attachment-hint="{{ _('You can attach up to 5 files, 10 MB each.') }}"
+data-status-send-label="{{ _('Send reply') }}"
+data-status-sent-label="{{ _('Your reply has been sent.') }}"
+data-status-you-label="{{ _('You') }}"
+data-status-support-label="{{ _('Support team') }}"
+{% endblock %}
 
 {% block header_intro %}{{ _("Check the status of a ticket you have already submitted.") }}{% endblock %}
 
@@ -47,14 +61,20 @@
     <input class="form-control" id="view-ticket-email" name="email" type="email" maxlength="254" autocomplete="email" placeholder="Enter email address" required aria-required="true">
 		<small class="text-muted d-block">{{ _("(used when submitting the ticket)") }}</small>
 	</div>
-  {% if recaptcha_enabled %}
-  <div class="ticket-recaptcha">
-    <div class="g-recaptcha" data-sitekey="{{ recaptcha_site_key }}"></div>
-  </div>
-  {% endif %}
-  <div id="view-ticket-status-result" class="mb-3" role="status" aria-live="polite"></div>
-  <button class="btn btn-primary" type="submit">{{ _("Check status") }}</button>
+  <button class="btn btn-primary" type="submit">
+    <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+      <circle cx="11" cy="11" r="7"/>
+      <path d="m20 20-4-4"/>
+    </svg>
+    {{ _("Check status") }}
+  </button>
 </form>
+{% if recaptcha_enabled %}
+<div class="ticket-recaptcha">
+  <div class="g-recaptcha" data-sitekey="{{ recaptcha_site_key }}"></div>
+</div>
+{% endif %}
+<div id="view-ticket-status-result" class="mb-3" role="status" aria-live="polite" hidden></div>
 {% endblock %}
 
 {% block page_script %}

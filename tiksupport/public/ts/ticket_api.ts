@@ -69,6 +69,34 @@ export async function callApi<T = any>(
   return data.message as T;
 }
 
+export async function callMultipartApi<T = any>(
+  csrfToken: string,
+  method: string,
+  values: Record<string, string | File[]>,
+): Promise<T> {
+  const body = new FormData();
+  Object.entries(values).forEach(([key, value]) => {
+    if (Array.isArray(value)) {
+      value.forEach((file) => body.append(key, file));
+    } else {
+      body.append(key, value);
+    }
+  });
+  const response = await fetch(`/api/method/${method}`, {
+    method: "POST",
+    headers: { "X-Frappe-CSRF-Token": csrfToken },
+    body,
+    credentials: "same-origin",
+  });
+  const data: ApiResponse<T> = await response.json();
+  if (!response.ok || data.exc) {
+    const messages: string[] = data._server_messages ? JSON.parse(data._server_messages) : [];
+    const message = messages.length ? JSON.parse(messages[0]).message : data.message;
+    throw new Error((message as string) || "Request failed. Please try again.");
+  }
+  return data.message as T;
+}
+
 export function showMessage(element: HTMLElement, text: string, isError = false): void {
   element.replaceChildren();
   const message = document.createElement("p");

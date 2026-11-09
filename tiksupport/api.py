@@ -3,6 +3,7 @@ import requests
 from frappe import _
 from frappe.rate_limiter import rate_limit
 from frappe.utils import escape_html, get_assets_json, validate_email_address
+from frappe.utils.file_manager import save_file
 
 
 def inject_helpdesk_sidebar_assets(response, request):
@@ -147,9 +148,59 @@ def create_ticket(
             "email_communication_consent": 1,
             "email_communication_consent_at": frappe.utils.now_datetime(),
         }
-    ).insert(ignore_permissions=True)
+    )
+    is_guest_submission = frappe.session.user == "Guest"
+    previous_public_submission = frappe.flags.get("tiksupport_public_submission")
+    frappe.flags.tiksupport_public_submission = is_guest_submission
+    try:
+        ticket.insert(ignore_permissions=True)
+    finally:
+        if previous_public_submission is None:
+            frappe.flags.pop("tiksupport_public_submission", None)
+        else:
+            frappe.flags.tiksupport_public_submission = previous_public_submission
 
     return {"name": ticket.name}
+
+
+def _get_public_ticket(ticket_number: str, email: str) -> dict:
+    ticket = frappe.db.get_value(
+        "HD Ticket",
+        ticket_number,
+        ["name", "subject", "status", "raised_by"],
+        as_dict=True,
+    )
+    if not ticket or (ticket.raised_by or "").strip().casefold() != email:
+        frappe.throw(
+            _("Ticket not found or the email address does not match."),
+            frappe.DoesNotExistError,
+        )
+    return ticket
+
+
+def _get_public_conversation(ticket_number: str) -> list[dict]:
+    communications = frappe.get_all(
+        "Communication",
+        filters={
+            "reference_doctype": "HD Ticket",
+            "reference_name": ticket_number,
+        },
+        fields=["name", "content", "creation", "sent_or_received", "sender"],
+        order_by="creation asc",
+        ignore_permissions=True,
+    )
+    for communication in communications:
+        communication["attachments"] = frappe.get_all(
+            "File",
+            filters={
+                "attached_to_doctype": "Communication",
+                "attached_to_name": communication.name,
+            },
+            fields=["file_name"],
+            order_by="creation asc",
+            ignore_permissions=True,
+        )
+    return communications
 
 
 @frappe.whitelist(allow_guest=True, methods=["POST"])
@@ -166,21 +217,72 @@ def check_ticket_status(
 
     verify_recaptcha(recaptcha_response)
 
-    ticket = frappe.db.get_value(
-        "HD Ticket",
-        ticket_number,
-        ["name", "subject", "status", "raised_by"],
-        as_dict=True,
-    )
-    if not ticket or (ticket.raised_by or "").strip().casefold() != email:
-        frappe.throw(
-            _("Ticket not found or the email address does not match."),
-            frappe.DoesNotExistError,
-        )
+    ticket = _get_public_ticket(ticket_number, email)
 
     status = frappe.db.get_value("HD Ticket Status", ticket.status, "label_customer")
     return {
         "name": ticket.name,
         "subject": ticket.subject,
         "status": status or ticket.status,
+        "conversation": _get_public_conversation(ticket.name),
     }
+
+
+@frappe.whitelist(allow_guest=True, methods=["POST"])
+@rate_limit(limit=30, seconds=15 * 60)
+def reply_to_ticket(
+    ticket_number: str,
+    email: str,
+    message: str,
+    recaptcha_response: str = "",
+) -> dict:
+    ticket_number = (ticket_number or "").strip()
+    email = (email or "").strip().casefold()
+    message = (message or "").strip()
+    if not ticket_number or not email or not message:
+        frappe.throw(_("Ticket number, email address, and a message are required."))
+    if len(message) > 10000:
+        frappe.throw(_("Your message must be 10,000 characters or fewer."))
+
+    verify_recaptcha(recaptcha_response)
+    ticket = _get_public_ticket(ticket_number, email)
+    if ticket.status == "Closed":
+        frappe.throw(_("This ticket is closed and cannot receive new replies."))
+
+    uploaded_files = (
+        frappe.request.files.getlist("attachments") if frappe.request else []
+    )
+    if len(uploaded_files) > 5:
+        frappe.throw(_("You can attach up to five files per reply."))
+
+    attachments = []
+    for uploaded_file in uploaded_files:
+        if not uploaded_file or not uploaded_file.filename:
+            continue
+        content = uploaded_file.stream.read()
+        if len(content) > 10 * 1024 * 1024:
+            frappe.throw(_("Each attachment must be 10 MB or smaller."))
+        file_doc = save_file(
+            uploaded_file.filename,
+            content,
+            "HD Ticket",
+            ticket.name,
+            is_private=1,
+        )
+        attachments.append({"name": file_doc.name})
+
+    public_submission = frappe.flags.get("tiksupport_public_submission")
+    frappe.flags.tiksupport_public_submission = frappe.session.user == "Guest"
+    try:
+        ticket_doc = frappe.get_doc("HD Ticket", ticket.name)
+        ticket_doc.create_communication_via_contact(
+            escape_html(message).replace("\n", "<br>"),
+            attachments=attachments,
+        )
+    finally:
+        if public_submission is None:
+            frappe.flags.pop("tiksupport_public_submission", None)
+        else:
+            frappe.flags.tiksupport_public_submission = public_submission
+
+    return {"conversation": _get_public_conversation(ticket.name)}
