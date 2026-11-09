@@ -38,6 +38,7 @@ if (page && createForm && createResult) {
       );
       createResult.replaceChildren();
       createResult.hidden = false;
+      createForm.parentElement?.insertBefore(createResult, createForm);
       createForm.remove();
       createResult.append(createSuccessCard(
         page,

@@ -100,7 +100,8 @@ export async function callMultipartApi<T = any>(
 export function showMessage(element: HTMLElement, text: string, isError = false): void {
   element.replaceChildren();
   const message = document.createElement("p");
-  message.className = isError ? "text-danger" : "text-success";
+  message.className = `ticket-alert alert ${isError ? "alert-danger" : "alert-success"}`;
+  message.setAttribute("role", isError ? "alert" : "status");
   message.textContent = text;
   element.append(message);
 }

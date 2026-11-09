@@ -157,9 +157,10 @@ function createStatusCard(
   replyForm.append(replyHint);
 
   const replyFeedback = document.createElement("p");
-  replyFeedback.className = "ticket-reply-form__feedback";
+  replyFeedback.className = "ticket-reply-form__feedback ticket-alert alert";
   replyFeedback.setAttribute("role", "status");
   replyFeedback.setAttribute("aria-live", "polite");
+  replyFeedback.hidden = true;
   replyForm.append(replyFeedback);
 
   const replyButton = document.createElement("button");
@@ -193,10 +194,14 @@ function createStatusCard(
       renderConversation(conversation, response.conversation);
       replyInput.value = "";
       replyFiles.value = "";
-      replyFeedback.className = "ticket-reply-form__feedback text-success";
+      replyFeedback.hidden = false;
+      replyFeedback.className = "ticket-reply-form__feedback ticket-alert alert alert-success";
+      replyFeedback.setAttribute("role", "status");
       replyFeedback.textContent = page.dataset.statusSentLabel || "Your reply has been sent.";
     } catch (error) {
-      replyFeedback.className = "ticket-reply-form__feedback text-danger";
+      replyFeedback.hidden = false;
+      replyFeedback.className = "ticket-reply-form__feedback ticket-alert alert alert-danger";
+      replyFeedback.setAttribute("role", "alert");
       replyFeedback.textContent = (error as Error).message;
     } finally {
       resetRecaptcha(page.dataset.recaptchaEnabled === "true");
@@ -204,6 +209,10 @@ function createStatusCard(
     }
   });
   if (result.status.toLowerCase() !== "closed") {
+    const recaptcha = document.querySelector<HTMLElement>(
+      "#view-ticket-status-page .ticket-recaptcha",
+    );
+    if (recaptcha) card.append(recaptcha);
     card.append(replyForm);
   }
 

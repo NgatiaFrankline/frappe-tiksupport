@@ -61,6 +61,11 @@ data-status-support-label="{{ _('Support team') }}"
     <input class="form-control" id="view-ticket-email" name="email" type="email" maxlength="254" autocomplete="email" placeholder="Enter email address" required aria-required="true">
 		<small class="text-muted d-block">{{ _("(used when submitting the ticket)") }}</small>
 	</div>
+  {% if recaptcha_enabled %}
+  <div class="ticket-recaptcha">
+    <div class="g-recaptcha" data-sitekey="{{ recaptcha_site_key }}"></div>
+  </div>
+  {% endif %}
   <button class="btn btn-primary" type="submit">
     <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
       <circle cx="11" cy="11" r="7"/>
@@ -69,11 +74,6 @@ data-status-support-label="{{ _('Support team') }}"
     {{ _("Check status") }}
   </button>
 </form>
-{% if recaptcha_enabled %}
-<div class="ticket-recaptcha">
-  <div class="g-recaptcha" data-sitekey="{{ recaptcha_site_key }}"></div>
-</div>
-{% endif %}
 <div id="view-ticket-status-result" class="mb-3" role="status" aria-live="polite" hidden></div>
 {% endblock %}
 
