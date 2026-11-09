@@ -65,6 +65,7 @@ if (page && statusForm && statusResult) {
         },
       );
       statusResult.replaceChildren(createStatusCard(page, result));
+      formHost?.insertBefore(statusResult, statusForm);
       statusForm.remove();
       resetRecaptcha(recaptchaEnabled);
     } catch (error) {
@@ -224,9 +225,10 @@ function createStatusCard(
     if (!formHost || !statusForm) return;
     statusForm.reset();
     statusForm.classList.remove("was-validated");
-    statusResult.hidden = false;
     statusResult.replaceChildren();
+    statusResult.hidden = true;
     formHost.insertBefore(statusForm, statusResult);
+    statusForm.insertBefore(statusResult, statusButton || null);
     statusForm.querySelector<HTMLInputElement>("input")?.focus();
   });
   card.append(again);
