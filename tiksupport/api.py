@@ -167,6 +167,10 @@ def create_ticket(
         else:
             frappe.flags.tiksupport_public_submission = previous_public_submission
 
+    if is_guest_submission:
+        for name in _get_ticket_communications(ticket.name):
+            frappe.db.set_value("Communication", name, "sender", validated_email.casefold())
+
     return {"name": ticket.name}
 
 
@@ -183,6 +187,15 @@ def _get_public_ticket(ticket_number: str, email: str) -> dict:
             frappe.DoesNotExistError,
         )
     return ticket
+
+
+def _get_ticket_communications(ticket_number: str) -> list[str]:
+    return frappe.get_all(
+        "Communication",
+        filters={"reference_doctype": "HD Ticket", "reference_name": ticket_number},
+        pluck="name",
+        ignore_permissions=True,
+    )
 
 
 def _get_public_conversation(ticket_number: str) -> list[dict]:
@@ -279,17 +292,30 @@ def reply_to_ticket(
         attachments.append({"name": file_doc.name})
 
     public_submission = frappe.flags.get("tiksupport_public_submission")
-    frappe.flags.tiksupport_public_submission = frappe.session.user == "Guest"
+    is_guest_reply = frappe.session.user == "Guest"
+    frappe.flags.tiksupport_public_submission = is_guest_reply
+    previous_user = frappe.session.user
+    existing_communications = set(_get_ticket_communications(ticket.name))
     try:
         ticket_doc = frappe.get_doc("HD Ticket", ticket.name)
+        # Saving the communication re-saves the ticket, which checks write
+        # permission on the session user and ignores ignore_permissions.
+        if is_guest_reply:
+            frappe.set_user("Administrator")
         ticket_doc.create_communication_via_contact(
             escape_html(message).replace("\n", "<br>"),
             attachments=attachments,
         )
     finally:
+        if frappe.session.user != previous_user:
+            frappe.set_user(previous_user)
         if public_submission is None:
             frappe.flags.pop("tiksupport_public_submission", None)
         else:
             frappe.flags.tiksupport_public_submission = public_submission
+
+    if is_guest_reply:
+        for name in set(_get_ticket_communications(ticket.name)) - existing_communications:
+            frappe.db.set_value("Communication", name, "sender", email)
 
     return {"conversation": _get_public_conversation(ticket.name)}
