@@ -17,7 +17,7 @@ def execute():
         "select": 0,
         "read": 1,
         "write": 0,
-        "create": 1,
+        "create": 0,
         "delete": 0,
         "submit": 0,
         "cancel": 0,

@@ -29,9 +29,9 @@ class TestTikSupportAPI(FrappeTestCase):
     def tearDown(self):
         frappe.set_user("Administrator")
 
-    def test_guest_has_hd_ticket_create_permission(self):
-        self.assertTrue(frappe.has_permission("HD Ticket", "create", user="Guest"))
+    def test_guest_has_limited_hd_ticket_permissions(self):
         self.assertTrue(frappe.has_permission("HD Ticket", "read", user="Guest"))
+        self.assertFalse(frappe.has_permission("HD Ticket", "create", user="Guest"))
         self.assertFalse(frappe.has_permission("HD Ticket", "write", user="Guest"))
         self.assertFalse(frappe.has_permission("HD Ticket", "export", user="Guest"))
 
