@@ -31,7 +31,8 @@ class TestTikSupportAPI(FrappeTestCase):
 
     def test_guest_has_hd_ticket_create_permission(self):
         self.assertTrue(frappe.has_permission("HD Ticket", "create", user="Guest"))
-        self.assertFalse(frappe.has_permission("HD Ticket", "read", user="Guest"))
+        self.assertTrue(frappe.has_permission("HD Ticket", "read", user="Guest"))
+        self.assertFalse(frappe.has_permission("HD Ticket", "write", user="Guest"))
         self.assertFalse(frappe.has_permission("HD Ticket", "export", user="Guest"))
 
     def test_guest_can_create_ticket_without_ticket_record_access(self):
@@ -52,6 +53,9 @@ class TestTikSupportAPI(FrappeTestCase):
         self.assertTrue(ticket.email_communication_consent_at)
         self.assertNotIn("<script>", ticket.description)
         self.assertFalse(has_permission(ticket, user="Guest"))
+        self.assertFalse(
+            frappe.has_permission("HD Ticket", "read", doc=ticket, user="Guest")
+        )
 
     def test_status_lookup_requires_matching_email_and_limits_data(self):
         ticket = make_ticket(raised_by="student@example.com")

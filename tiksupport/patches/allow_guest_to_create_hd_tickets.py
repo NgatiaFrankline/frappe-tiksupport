@@ -15,7 +15,7 @@ def execute():
 
     rights = {
         "select": 0,
-        "read": 0,
+        "read": 1,
         "write": 0,
         "create": 1,
         "delete": 0,
