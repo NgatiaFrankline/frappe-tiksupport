@@ -225,6 +225,7 @@ function createStatusCard(
     if (!formHost || !statusForm) return;
     statusForm.reset();
     statusForm.classList.remove("was-validated");
+    setLoading(statusButton, "Check status");
     statusResult.replaceChildren();
     statusResult.hidden = true;
     formHost.insertBefore(statusForm, statusResult);
