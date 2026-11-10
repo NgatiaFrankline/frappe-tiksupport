@@ -152,9 +152,16 @@ def create_ticket(
     is_guest_submission = frappe.session.user == "Guest"
     previous_public_submission = frappe.flags.get("tiksupport_public_submission")
     frappe.flags.tiksupport_public_submission = is_guest_submission
+    previous_user = frappe.session.user
     try:
+        # HD Ticket.after_insert tags the ticket, which checks write permission
+        # on the session user and ignores ignore_permissions.
+        if is_guest_submission:
+            frappe.set_user("Administrator")
         ticket.insert(ignore_permissions=True)
     finally:
+        if frappe.session.user != previous_user:
+            frappe.set_user(previous_user)
         if previous_public_submission is None:
             frappe.flags.pop("tiksupport_public_submission", None)
         else:
