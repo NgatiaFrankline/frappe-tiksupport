@@ -11,6 +11,7 @@ from tiksupport.api import (
     check_ticket_status,
     create_ticket,
     inject_helpdesk_sidebar_assets,
+    inject_login_public_links,
     reply_to_ticket,
     verify_recaptcha,
 )
@@ -194,4 +195,23 @@ class TestTikSupportAPI(FrappeTestCase):
         self.assertIn(
             '<span class="tiksupport-helpdesk-loader__message">Loading Helpdesk...</span>',
             response.get_data(as_text=True),
+        )
+
+    def test_login_page_has_public_ticket_links_once(self):
+        response = Response(
+            '<html><body><section class="for-login"></section>'
+            '<section class="for-signup"></section></body></html>',
+            mimetype="text/html",
+        )
+        request = frappe._dict(path="/login")
+
+        inject_login_public_links(response, request)
+        inject_login_public_links(response, request)
+
+        body = response.get_data(as_text=True)
+        self.assertEqual(body.count('class="tiksupport-login-links"'), 1)
+        self.assertIn('<a href="/">Home</a>', body)
+        self.assertIn('<a href="/create-ticket">Create a ticket</a>', body)
+        self.assertIn(
+            '<a href="/view-ticket-status">Check ticket status</a>', body
         )

@@ -6,6 +6,29 @@ from frappe.utils import escape_html, get_assets_json, validate_email_address
 from frappe.utils.file_manager import save_file
 
 
+def inject_login_public_links(response, request):
+    if request.path != "/login" or response.mimetype != "text/html":
+        return
+
+    body = response.get_data()
+    if b'tiksupport-login-links' in body:
+        return
+
+    login_links = (
+        b'<nav class="tiksupport-login-links" aria-label="Helpdesk links">'
+        b'<a href="/">Home</a>'
+        b'<a href="/create-ticket">Create a ticket</a>'
+        b'<a href="/view-ticket-status">Check ticket status</a>'
+        b"</nav>"
+    )
+    section_end = b"</section>"
+    if section_end not in body:
+        return
+
+    body = body.replace(section_end, login_links + section_end, 1)
+    response.set_data(body)
+
+
 def inject_helpdesk_sidebar_assets(response, request):
     if request.path != "/helpdesk" and not request.path.startswith("/helpdesk/"):
         return
