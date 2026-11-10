@@ -7,6 +7,7 @@ app_license = "mit"
 required_apps = ["helpdesk"]
 
 after_request = ["tiksupport.api.inject_helpdesk_sidebar_assets"]
+after_migrate = ["tiksupport.patches.allow_guest_to_create_hd_tickets.execute"]
 
 # Apps
 # ------------------
